@@ -1,4 +1,4 @@
-package com.clouway.jdbc;
+package com.clouway.jdbc.crud;
 
 import java.sql.*;
 
