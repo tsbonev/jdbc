@@ -3,7 +3,6 @@ package com.clouway.jdbc.foreignkey;
 import java.sql.*;
 import java.util.List;
 
-@SuppressWarnings("Duplicates")
 public class Demo {
 
     public static void main(String[] args){
@@ -77,8 +76,8 @@ public class Demo {
         personRepo.deletePersonById(1);
 
 
-        //tripRepo.dropTable();
-        //personRepo.dropTable();
+        tripRepo.dropTable();
+        personRepo.dropTable();
 
     }
 
