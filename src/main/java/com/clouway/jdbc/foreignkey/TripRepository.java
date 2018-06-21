@@ -19,6 +19,10 @@ public class TripRepository {
         return instance;
     }
 
+    public static void clearInstance(){
+        instance = null;
+    }
+
     private TripRepository(Connection conn){
         this.conn = conn;
     }
@@ -205,7 +209,7 @@ public class TripRepository {
     public void deleteTripById(int id){
 
         try {
-            PreparedStatement delete = conn.prepareStatement("DELETE * FROM trip" +
+            PreparedStatement delete = conn.prepareStatement("DELETE FROM trip" +
                     " WHERE id = ?");
             delete.setInt(1, id);
             delete.execute();

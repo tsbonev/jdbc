@@ -117,7 +117,7 @@ public class PersonRepository {
     public void deletePersonById(int id){
 
         try {
-            PreparedStatement delete = conn.prepareStatement("DELETE * FROM person" +
+            PreparedStatement delete = conn.prepareStatement("DELETE FROM person" +
                     " WHERE id = ?");
             delete.setInt(1, id);
             delete.execute();
