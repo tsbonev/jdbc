@@ -67,6 +67,18 @@ public class PersonRepository {
 
     }
 
+    public void dropTableContent(){
+
+        try {
+            PreparedStatement delete = conn.prepareStatement("DELETE FROM person");
+            delete.execute();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
     public List<Person> getPeopleByName(String name){
 
         return this.getAll()

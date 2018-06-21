@@ -36,6 +36,11 @@ public class Demo {
                 Date.valueOf("2019-03-02"),
                 Date.valueOf("2019-05-23"));
 
+        Trip varnaTripWithSteve = new Trip(bill.getEgn(),
+                "Varna",
+                Date.valueOf("2020-03-02"),
+                Date.valueOf("2020-05-23"));
+
 
 
         personRepo.addPerson(john);
@@ -45,6 +50,7 @@ public class Demo {
         tripRepo.addTrip(sofiaTripWithJohn);
         tripRepo.addTrip(sofiaTripWithBill);
         tripRepo.addTrip(sofiaTripWithSteve);
+        tripRepo.addTrip(varnaTripWithSteve);
 
         Person getJohn = personRepo.getPersonById(1);
         Trip getSofiaTrip = tripRepo.getTripById(1);
@@ -65,6 +71,9 @@ public class Demo {
 
         System.out.println("People in Sofia at the same time: " + peopleInSameCity.size());
 
+        List<String> mostVisitedCities = tripRepo.getMostVisitedDescending();
+        
+        mostVisitedCities.stream().forEach(s -> System.out.println(s));
 
 
         tripRepo.dropTable();

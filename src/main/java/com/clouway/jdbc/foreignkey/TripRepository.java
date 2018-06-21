@@ -143,6 +143,43 @@ public class TripRepository {
 
     }
 
+    public void dropTableContent(){
+
+        try {
+            PreparedStatement delete = conn.prepareStatement("DELETE FROM trip");
+            delete.execute();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public List<String> getMostVisitedDescending(){
+
+        try {
+
+            List<String> list = new LinkedList<>();
+
+            PreparedStatement select = conn.prepareStatement("SELECT city, COUNT(*) occurence FROM trip" +
+                    " GROUP BY city" +
+                    " ORDER BY occurence DESC");
+
+            ResultSet result = select.executeQuery();
+
+            while (result.next()){
+                list.add(result.getString("city"));
+            }
+
+            return list;
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public void updateTrip(Trip trip){
 
         try {
