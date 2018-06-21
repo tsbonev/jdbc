@@ -22,26 +22,83 @@ public class personRepositoryTest {
 
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
-    @Mock Connection conn;
-    @Mock PreparedStatement prst;
+    Connection mockConn = context.mock(Connection.class);
+    PreparedStatement prst = context.mock(PreparedStatement.class);
 
-    PersonRepository repo = PersonRepository.instanceOf(conn);
+    PersonRepository repo = PersonRepository.instanceOf(mockConn);
 
     @Test
     public void addPerson() throws SQLException {
 
         context.checking(new Expectations(){{
-
-            oneOf(conn).prepareStatement(with(any(String.class))); will(returnValue(prst));
+            oneOf(mockConn).prepareStatement(with(any(String.class))); will(returnValue(prst));
             oneOf(prst).setString(1, john.getFname());
             oneOf(prst).setString(2, john.getEmail());
             oneOf(prst).setString(3, john.getEgn());
-            oneOf(prst).setInt(3, john.getAge());
+            oneOf(prst).setInt(4, john.getAge());
             oneOf(prst).execute();
 
         }});
 
         repo.addPerson(john);
+
+    }
+
+    @Test
+    public void updatePerson() throws SQLException {
+
+        context.checking(new Expectations(){{
+            oneOf(mockConn).prepareStatement(with(any(String.class))); will(returnValue(prst));
+            oneOf(prst).setString(1, john.getFname());
+            oneOf(prst).setString(2, john.getEgn());
+            oneOf(prst).setInt(3, john.getAge());
+            oneOf(prst).setString(4, john.getEmail());
+            oneOf(prst).setInt(5, john.getId());
+            oneOf(prst).execute();
+        }});
+
+
+        repo.updatePerson(john);
+
+    }
+
+    @Test
+    public void deletePersonById() throws SQLException{
+
+        context.checking(new Expectations(){{
+            oneOf(mockConn).prepareStatement(with(any(String.class))); will(returnValue(prst));
+            oneOf(prst).setInt(1, john.getId());
+            oneOf(prst).execute();
+
+        }});
+
+        repo.deletePersonById(john.getId());
+
+    }
+
+    @Test
+    public void dropTable() throws SQLException{
+
+        context.checking(new Expectations(){{
+            oneOf(mockConn).prepareStatement(with(any(String.class))); will(returnValue(prst));
+            oneOf(prst).execute();
+
+        }});
+
+        repo.dropTable();
+
+    }
+
+    @Test
+    public void dropContent() throws SQLException{
+
+        context.checking(new Expectations(){{
+            oneOf(mockConn).prepareStatement(with(any(String.class))); will(returnValue(prst));
+            oneOf(prst).execute();
+
+        }});
+
+        repo.dropTableContent();
 
     }
 
