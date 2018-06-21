@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("Duplicates")
 public class PersonRepository {
 
-    private Connection conn;
+    private static Connection conn;
 
     private static PersonRepository instance;
 
@@ -20,7 +20,11 @@ public class PersonRepository {
         return instance;
     }
 
-    private PersonRepository(Connection conn){
+    public static void clearInstance(){
+        instance = null;
+    }
+
+    public PersonRepository(Connection conn){
         this.conn = conn;
     }
 

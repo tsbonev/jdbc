@@ -1,8 +1,10 @@
 package com.clouway.jdbc.foreignkey;
 
 import org.jmock.Expectations;
-import org.jmock.auto.Mock;
+import org.jmock.Sequence;
 import org.jmock.integration.junit4.JUnitRuleMockery;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -14,33 +16,43 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
-public class personRepositoryTest {
+public class personRepositoryUnitTest {
 
-    Person john = new Person("John", "9454256423", 20, "John@doe.com");
-    Person bill = new Person("Bill", "9351235432", 35, "Bill@doe.com");
-    Person steve = new Person("Steve", "9252131453", 55, "Steve@aol.com");
+    Person person = new Person("John", "9454256423", 20, "John@doe.com");
 
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
-    Connection mockConn = context.mock(Connection.class);
-    PreparedStatement prst = context.mock(PreparedStatement.class);
 
-    PersonRepository repo = PersonRepository.instanceOf(mockConn);
+    Connection mockConn;
+    PreparedStatement prst;
+    PersonRepository repo;
+
+    @Before
+    public void setUp(){
+        mockConn = context.mock(Connection.class);
+        prst = context.mock(PreparedStatement.class);
+        repo = PersonRepository.instanceOf(mockConn);
+    }
+
+    @After
+    public void cleanUp(){
+        PersonRepository.clearInstance();
+    }
 
     @Test
     public void addPerson() throws SQLException {
 
         context.checking(new Expectations(){{
             oneOf(mockConn).prepareStatement(with(any(String.class))); will(returnValue(prst));
-            oneOf(prst).setString(1, john.getFname());
-            oneOf(prst).setString(2, john.getEmail());
-            oneOf(prst).setString(3, john.getEgn());
-            oneOf(prst).setInt(4, john.getAge());
+            oneOf(prst).setString(1, person.getFname());
+            oneOf(prst).setString(2, person.getEmail());
+            oneOf(prst).setString(3, person.getEgn());
+            oneOf(prst).setInt(4, person.getAge());
             oneOf(prst).execute();
 
         }});
 
-        repo.addPerson(john);
+        repo.addPerson(person);
 
     }
 
@@ -49,16 +61,16 @@ public class personRepositoryTest {
 
         context.checking(new Expectations(){{
             oneOf(mockConn).prepareStatement(with(any(String.class))); will(returnValue(prst));
-            oneOf(prst).setString(1, john.getFname());
-            oneOf(prst).setString(2, john.getEgn());
-            oneOf(prst).setInt(3, john.getAge());
-            oneOf(prst).setString(4, john.getEmail());
-            oneOf(prst).setInt(5, john.getId());
+            oneOf(prst).setString(1, person.getFname());
+            oneOf(prst).setString(2, person.getEgn());
+            oneOf(prst).setInt(3, person.getAge());
+            oneOf(prst).setString(4, person.getEmail());
+            oneOf(prst).setInt(5, person.getId());
             oneOf(prst).execute();
         }});
 
 
-        repo.updatePerson(john);
+        repo.updatePerson(person);
 
     }
 
@@ -67,12 +79,12 @@ public class personRepositoryTest {
 
         context.checking(new Expectations(){{
             oneOf(mockConn).prepareStatement(with(any(String.class))); will(returnValue(prst));
-            oneOf(prst).setInt(1, john.getId());
+            oneOf(prst).setInt(1, person.getId());
             oneOf(prst).execute();
 
         }});
 
-        repo.deletePersonById(john.getId());
+        repo.deletePersonById(person.getId());
 
     }
 
