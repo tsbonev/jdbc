@@ -41,8 +41,6 @@ public class Demo {
                 Date.valueOf("2020-03-02"),
                 Date.valueOf("2020-05-23"));
 
-
-
         personRepo.addPerson(john);
         personRepo.addPerson(bill);
         personRepo.addPerson(steve);
@@ -98,8 +96,7 @@ public class Demo {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
+        
         return null;
 
     }
