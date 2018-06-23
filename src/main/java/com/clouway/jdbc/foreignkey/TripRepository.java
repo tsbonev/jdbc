@@ -16,6 +16,7 @@ public class TripRepository {
 
     public static TripRepository instanceOf(Connection conn){
         if(instance == null) instance = new TripRepository(conn);
+        instance.conn = conn;
         return instance;
     }
 

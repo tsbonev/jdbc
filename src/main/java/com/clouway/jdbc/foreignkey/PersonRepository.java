@@ -17,6 +17,7 @@ public class PersonRepository {
 
     public static PersonRepository instanceOf(Connection conn){
         if(instance == null) instance = new PersonRepository(conn);
+        instance.conn = conn;
         return instance;
     }
 
