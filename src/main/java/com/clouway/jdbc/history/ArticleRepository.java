@@ -145,6 +145,7 @@ public class ArticleRepository {
     public void createArticleTable() {
 
         try {
+            /* MySQL
             PreparedStatement create = conn.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS article(" +
                             "id int NOT NULL AUTO_INCREMENT," +
@@ -155,6 +156,20 @@ public class ArticleRepository {
                     "CREATE TABLE IF NOT EXISTS article_history(" +
                             "id int NOT NULL AUTO_INCREMENT," +
                             "content text NOT NULL," +
+                            "PRIMARY KEY(id))"
+            );
+            */
+
+            PreparedStatement create = conn.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS article(" +
+                            "id int IDENTITY NOT NULL," +
+                            "content VARCHAR(255) NOT NULL," +
+                            "PRIMARY KEY(id))"
+            );
+            PreparedStatement createHistory = conn.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS article_history(" +
+                            "id int IDENTITY NOT NULL," +
+                            "content VARCHAR(255) NOT NULL," +
                             "PRIMARY KEY(id))"
             );
 

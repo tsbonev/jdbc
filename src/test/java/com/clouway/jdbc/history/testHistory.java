@@ -5,6 +5,9 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +18,29 @@ public class testHistory {
 
     ArticleRepository repo;
 
+    public static Connection getConnection() {
+
+        try {
+            String hsqlDriver = "org.hsqldb.jdbcDriver";
+            Class.forName(hsqlDriver);
+            String hsqlUrl = "jdbc:hsqldb:mem:people";
+            String hsqlUsername = "sa";
+            String hsqlPassword = "";
+            Connection conn = DriverManager.getConnection(hsqlUrl, hsqlUsername, hsqlPassword);
+            return conn;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
     @Before
     public void setUp(){
-        repo = ArticleRepository.getInstance(Demo.getConnection());
+        repo = ArticleRepository.getInstance(getConnection());
     }
 
     @After
